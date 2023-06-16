@@ -1,16 +1,17 @@
 [![Tests](../../actions/workflows/tests-13-sprint.yml/badge.svg)](../../actions/workflows/tests-13-sprint.yml) [![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)
-# Проект Mesto фронтенд + бэкенд
+# Project: Mesto frontend + backend
 
+## About
 
-## Директории
+The project presents the Express.js framework and the work of the server. Functionality of token checking, user registration and authorization, adding/removing a card, unmarking and setting of likes, and updating user information is performed.
 
-`/routes` — папка с файлами роутера  
-`/controllers` — папка с файлами контроллеров пользователя и карточки   
-`/models` — папка с файлами описания схем пользователя и карточки  
-  
-Остальные директории вспомогательные, создаются при необходимости разработчиком
+## Directories
 
-## Запуск проекта
+`/routes` - folder with router files  
+`/controllers` - folder with files of user controllers and card   
+`/models` - folder with files describing user and card schemes
 
-`npm run start` — запускает сервер   
-`npm run dev` — запускает сервер с hot-reload
+## Project start
+
+`npm run start` - starts server   
+`npm run dev` - starts server with hot-reload
