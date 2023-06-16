@@ -27,7 +27,8 @@ const getUserId = (req, res) => User.findById(req.params.id).then((item) => {
     return res.status(500).send({ message: error.message });
   });
 
-const updateProfile = (req, res) => User.findByIdAndUpdate(req.user._id, req.body, { new: true })
+const updateProfile = (req, res) => User
+  .findByIdAndUpdate(req.user._id, req.body, { new: true, runValidators: true })
   .then((item) => {
     if (!item) {
       return res.status(404).send({ message: 'Пользователь по указанному _id не найден.' });
@@ -41,7 +42,8 @@ const updateProfile = (req, res) => User.findByIdAndUpdate(req.user._id, req.bod
     return res.status(500).send({ message: error.message });
   });
 
-const updateAvatar = (req, res) => User.findByIdAndUpdate(req.user._id, req.body, { new: true })
+const updateAvatar = (req, res) => User
+  .findByIdAndUpdate(req.user._id, req.body, { new: true, runValidators: true })
   .then((item) => {
     if (!item) {
       return res.status(404).send({ message: 'Пользователь с указанным _id не найден.' });
