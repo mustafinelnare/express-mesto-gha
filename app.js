@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 
 const app = express();
 
+const { login, createUser } = require('./controllers/users');
+
 const { PORT = 3000 } = process.env;
 app.use(express.json());
 
@@ -16,6 +18,9 @@ mongoose
   .catch(() => {
     console.log('fail');
   });
+
+app.post('/signin', login);
+app.post('/signup', createUser);
 
 app.use((req, res, next) => {
   req.user = {
