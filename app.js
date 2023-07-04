@@ -1,5 +1,7 @@
 const express = require('express');
+const { errors, celebrate, Joi } = require('celebrate');
 const mongoose = require('mongoose');
+const auth = require('./middlewares/auth');
 
 const app = express();
 
@@ -19,19 +21,43 @@ mongoose
     console.log('fail');
   });
 
-app.post('/signin', login);
-app.post('/signup', createUser);
+app.post('/signin', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().email().required(),
+    password: Joi.string().min(8).required(),
+    name: Joi.string().min(2).max(30),
+    about: Joi.string().min(2).max(30),
+    avatar: Joi.string().pattern(/^(https?):\/\/[^\s$.?#].[^\s]*$/),
+  }),
+}), login);
 
-app.use((req, res, next) => {
-  req.user = {
-    _id: '648aed8568a6271074016768',
-  };
+app.post('/signup', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().email().required(),
+    password: Joi.string().min(8).required(),
+    name: Joi.string().min(2).max(30),
+    about: Joi.string().min(2).max(30),
+    avatar: Joi.string().pattern(/^(https?):\/\/[^\s$.?#].[^\s]*$/),
+  }),
+}), createUser);
 
+app.use('/users', auth, require('./routes/usersRoutes'));
+app.use('/cards', auth, require('./routes/cardsRoutes'));
+
+app.use(errors());
+
+app.use((error, req, res, next) => {
+  console.log(error);
+  const { statusCode = 500, message } = error;
+  res
+    .status(statusCode)
+    .send({
+      message: statusCode === 500
+        ? 'На сервере произошла ошибка'
+        : message,
+    });
   next();
 });
-
-app.use('/users', require('./routes/usersRoutes'));
-app.use('/cards', require('./routes/cardsRoutes'));
 
 app.use('/*', (req, res, next) => {
   res.status(404).send({ message: 'Страница не найдена.' });
