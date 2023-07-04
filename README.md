@@ -3,7 +3,7 @@
 
 ## About
 
-The project presents the Express.js framework and the work of the server. Functionality of token checking, user registration and authorization, adding/removing a card, unmarking and setting of likes, and updating user information is performed.
+The [project](https://github.com/mustafinelnare/express-mesto-gha) presents the Express.js framework and the work of the server. Functionality of token checking, user registration and authorization, adding/removing a card, unmarking and setting of likes, and updating user information is performed.
 
 ## Directories
 
@@ -15,3 +15,4 @@ The project presents the Express.js framework and the work of the server. Functi
 
 `npm run start` - starts server   
 `npm run dev` - starts server with hot-reload
+
