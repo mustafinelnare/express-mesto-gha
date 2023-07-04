@@ -13,6 +13,7 @@ app.use(express.json());
 mongoose
   .connect('mongodb://127.0.0.1:27017/mestodb', {
     useNewUrlParser: true,
+    autoIndex: true,
   })
   .then(() => {
     console.log('success');
@@ -23,7 +24,7 @@ mongoose
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
-    email: Joi.string().email().required(),
+    email: Joi.string().required().email(),
     password: Joi.string().min(8).required(),
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
@@ -47,7 +48,6 @@ app.use('/cards', auth, require('./routes/cardsRoutes'));
 app.use(errors());
 
 app.use((error, req, res, next) => {
-  console.log(error);
   const { statusCode = 500, message } = error;
   res
     .status(statusCode)

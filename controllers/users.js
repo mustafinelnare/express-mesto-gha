@@ -24,7 +24,7 @@ const createUser = (req, res, next) => {
         next(new BadRequestError('Переданы некорректные данные при создании пользователя.'));
       }
       if (error.name === 'MongoServerError') {
-        throw new ConflictError('Такой пользователь уже существует!');
+        next(new ConflictError('Такой пользователь уже существует!'));
       }
       next(error);
     });
