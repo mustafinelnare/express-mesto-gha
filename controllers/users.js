@@ -30,7 +30,7 @@ const createUser = (req, res, next) => {
     });
 };
 
-const login = (req, res) => {
+const login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
@@ -40,7 +40,7 @@ const login = (req, res) => {
         .send({ token });
     })
     .catch(() => {
-      throw new UnauthorizedError('Необходимо ввести корректные логин и пароль.');
+      next(new UnauthorizedError('Необходимо ввести корректные логин и пароль.'));
     });
 };
 
