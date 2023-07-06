@@ -22,11 +22,11 @@ const createUser = (req, res, next) => {
     .catch((error) => {
       if (error.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные при создании пользователя.'));
-      }
-      if (error.name === 'MongoServerError') {
+      } else if (error.name === 'MongoServerError') {
         next(new ConflictError('Такой пользователь уже существует!'));
+      } else {
+        next(error);
       }
-      next(error);
     });
 };
 
@@ -44,7 +44,7 @@ const login = (req, res, next) => {
     });
 };
 
-const getUser = (req, res, next) => User.find({})
+const getUsers = (req, res, next) => User.find({})
   .then((users) => res.status(200).send(users))
   .catch((error) => next(error));
 
@@ -97,7 +97,7 @@ const updateAvatar = (req, res, next) => User
 
 module.exports = {
   createUser,
-  getUser,
+  getUsers,
   getUserId,
   updateProfile,
   updateAvatar,
