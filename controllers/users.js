@@ -22,7 +22,7 @@ const createUser = (req, res, next) => {
     .catch((error) => {
       if (error.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные при создании пользователя.'));
-      } else if (error.name === 'MongoServerError') {
+      } else if (error.name === 11000) {
         next(new ConflictError('Такой пользователь уже существует!'));
       } else {
         next(error);
@@ -39,9 +39,7 @@ const login = (req, res, next) => {
         .status(200)
         .send({ token });
     })
-    .catch(() => {
-      next(new UnauthorizedError('Необходимо ввести корректные логин и пароль.'));
-    });
+    .catch(next);
 };
 
 const getUsers = (req, res, next) => User.find({})
