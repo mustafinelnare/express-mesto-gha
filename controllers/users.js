@@ -38,9 +38,7 @@ const login = (req, res, next) => {
         .status(200)
         .send({ token });
     })
-    .catch((error) => {
-      next(error);
-    });
+    .catch(next);
 };
 
 const getUsers = (req, res, next) => User.find({})
